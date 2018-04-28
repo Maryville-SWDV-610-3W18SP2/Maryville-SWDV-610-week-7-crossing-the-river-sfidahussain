@@ -21,62 +21,63 @@ class State():
         if self.missionaryRight < self.cannibalRight and self.missionaryRight != 0:
             return False
         return True
-    
+        
 def newStates(state):
-	children = [];
-	if state.side == -1:
-		newState = State(state.cannibalLeft, state.missionaryLeft - 2, 1, state.cannibalRight, state.missionaryRight + 2)
-		## Two missionaries cross left to right.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft - 2, state.missionaryLeft, 1, state.cannibalRight + 2, state.missionaryRight)
-		## Two cannibals cross left to right.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft - 1, state.missionaryLeft - 1, 1, state.cannibalRight + 1, state.missionaryRight + 1)
-		## One missionary and one cannibal cross left to right.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft, state.missionaryLeft - 1, 1, state.cannibalRight, state.missionaryRight + 1)
-		## One missionary crosses left to right.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft - 1, state.missionaryLeft, 1, state.cannibalRight + 1, state.missionaryRight)
-		## One cannibal crosses left to right.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-	else:
-		newState = State(state.cannibalLeft, state.missionaryLeft + 2, -1, state.cannibalRight, state.missionaryRight - 2)
-		## Two missionaries cross right to left.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft + 2, state.missionaryLeft, -1, state.cannibalRight - 2, state.missionaryRight)
-		## Two cannibals cross right to left.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft + 1, state.missionaryLeft + 1, -1, state.cannibalRight - 1, state.missionaryRight - 1)
-		## One missionary and one cannibal cross right to left.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft, state.missionaryLeft + 1, -1, state.cannibalRight, state.missionaryRight - 1)
-		## One missionary crosses right to left.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-		newState = State(state.cannibalLeft + 1, state.missionaryLeft, -1, state.cannibalRight - 1, state.missionaryRight)
-		## One cannibal crosses right to left.
-		if newState.isValid():
-			newState.parent = state
-			children.append(newState)
-	return children
+    children = [];
+    if state.side == -1:
+        newState = State(state.cannibalLeft, state.missionaryLeft - 2, 1, state.cannibalRight, state.missionaryRight + 2)
+        ## Two missionaries cross left to right.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft - 2, state.missionaryLeft, 1, state.cannibalRight + 2, state.missionaryRight)
+        ## Two cannibals cross left to right.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft - 1, state.missionaryLeft - 1, 1, state.cannibalRight + 1, state.missionaryRight + 1)
+        ## One missionary and one cannibal cross left to right.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft, state.missionaryLeft - 1, 1, state.cannibalRight, state.missionaryRight + 1)
+        ## One missionary crosses left to right.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft - 1, state.missionaryLeft, 1, state.cannibalRight + 1, state.missionaryRight)
+        ## One cannibal crosses left to right.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+    else:
+        newState = State(state.cannibalLeft, state.missionaryLeft + 2, -1, state.cannibalRight, state.missionaryRight - 2)
+        #Two missionaries cross right to left.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft + 2, state.missionaryLeft, -1, state.cannibalRight - 2, state.missionaryRight)
+        # Two cannibals cross right to left.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft + 1, state.missionaryLeft + 1, -1, state.cannibalRight - 1, state.missionaryRight - 1)
+        # One missionary and one cannibal cross right to left.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft, state.missionaryLeft + 1, -1, state.cannibalRight, state.missionaryRight - 1)
+        # One missionary crosses right to left.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+        newState = State(state.cannibalLeft + 1, state.missionaryLeft, -1, state.cannibalRight - 1, state.missionaryRight)
+        # One cannibal crosses right to left.
+        if newState.isValid():
+            newState.parent = state
+            children.append(newState)
+            
+    return children
 
 def bfs():
     # starting off with initial state that there's 3 missionaries and 3 cannibals and the boats on the left with no one else on the other side.
