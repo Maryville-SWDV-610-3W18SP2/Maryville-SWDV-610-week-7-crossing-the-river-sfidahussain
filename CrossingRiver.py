@@ -23,41 +23,25 @@ class State():
         return True
         
 def newStates(state):
-    children = [];
+    children = []
+    cannibalLeft = [0, -2, -1, 0, -1]
+    missionaryLeft = [-2, 0, -1, -1, 1]
+    cannibalRight = [0, 2, 1, 0, 1]
+    missionaryRight = [2, 0, 1, 1, 0]    
+    # if you're on the left
     if state.side == -1:
         newState = State(state.cannibalLeft, state.missionaryLeft - 2, 1, state.cannibalRight, state.missionaryRight + 2)
-        ## Two missionaries cross left to right.
+        for x in range(4):
+            if newState.isValid():
+                newState.parent = state
+                children.append(newState)
+            newState = State(state.cannibalLeft + cannibalLeft[x], state.missionaryLeft + missionaryLeft[x], 1, state.cannibalRight + cannibalRight[x], state.missionaryRight + missionaryRight[x])
         if newState.isValid():
             newState.parent = state
             children.append(newState)
-        newState = State(state.cannibalLeft - 2, state.missionaryLeft, 1, state.cannibalRight + 2, state.missionaryRight)
-        ## Two cannibals cross left to right.
-        if newState.isValid():
-            newState.parent = state
-            children.append(newState)
-        newState = State(state.cannibalLeft - 1, state.missionaryLeft - 1, 1, state.cannibalRight + 1, state.missionaryRight + 1)
-        ## One missionary and one cannibal cross left to right.
-        if newState.isValid():
-            newState.parent = state
-            children.append(newState)
-        newState = State(state.cannibalLeft, state.missionaryLeft - 1, 1, state.cannibalRight, state.missionaryRight + 1)
-        ## One missionary crosses left to right.
-        if newState.isValid():
-            newState.parent = state
-            children.append(newState)
-        newState = State(state.cannibalLeft - 1, state.missionaryLeft, 1, state.cannibalRight + 1, state.missionaryRight)
-        ## One cannibal crosses left to right.
-        if newState.isValid():
-            newState.parent = state
-            children.append(newState)
-    else:
+    # if you're on the right
+    if state.side == 1:
         newState = State(state.cannibalLeft, state.missionaryLeft + 2, -1, state.cannibalRight, state.missionaryRight - 2)
-        #Two missionaries cross right to left.
-        if newState.isValid():
-            newState.parent = state
-            children.append(newState)
-        newState = State(state.cannibalLeft + 2, state.missionaryLeft, -1, state.cannibalRight - 2, state.missionaryRight)
-        # Two cannibals cross right to left.
         if newState.isValid():
             newState.parent = state
             children.append(newState)
@@ -116,13 +100,13 @@ def printStates(solution):
         crossing = crossing.parent
     # going backwards in list since the parents were added in reverse order
     for x in range(len(traversal), 0, -1):
-        state = traversal[x - 1] # have to do -1 so you start at the left side
+        state = traversal[x - 1] # have to -1 so you start at the left side
         sideStr = ''
         if state.side == -1:
-            sideStr = 'left'
+            sideStr = '|    '
         else:
-            sideStr = 'right'
-        print("({0}, {1}, {2}, {3}, {4})".format(state.cannibalLeft, state.missionaryLeft, sideStr, state.cannibalRight, state.missionaryRight))
+            sideStr = '    |'
+        print("{0}, {1} {2} {3},{4} ".format(state.cannibalLeft, state.missionaryLeft, sideStr, state.cannibalRight, state.missionaryRight))
 
 def main():
     winner = bfs()
