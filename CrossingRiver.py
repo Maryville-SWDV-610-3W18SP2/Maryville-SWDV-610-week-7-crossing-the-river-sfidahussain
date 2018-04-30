@@ -1,3 +1,6 @@
+# Cannibals and Missionary Problem 
+
+# Describes state which includes the cannibals, missionaries, if the transition is valid. 
 class State():
     
     def __init__(self, cannibalLeft, missionaryLeft, side, cannibalRight, missionaryRight):
@@ -21,7 +24,10 @@ class State():
         if self.missionaryRight < self.cannibalRight and self.missionaryRight != 0:
             return False
         return True
-        
+ 
+# New States returns a list of predecessors of a certain state, checking its validity and adding it to a list, which is returned in the end.
+# Referenced: https://github.com/marianafranco/missionaries-and-cannibals/blob/master/python/missionaries_and_cannibals.py
+
 def newStates(state):
     children = []
     cannibalLeft = [0, -2, -1, 0, -1]
@@ -70,8 +76,7 @@ def bfs():
         return initial
     else:
         river = []
-        # for avoiding duplicates
-        seen = set()
+        seen = []
         # adding the initial state to the list
         river.append(initial)
         while river:
@@ -81,8 +86,8 @@ def bfs():
             if state.isGoal() == True:
                 printStates(state)
                 return state
-            #if it isn't the goal, add it to the set, so that way there are no duplicate paths.
-            seen.add(state)
+            #if it isn't the goal, add it to the list
+            seen.append(state)
             # basing off of what was the initial, newStates will return a list of new valid states.
             childStates = newStates(state)           
             # based off of the list of valid childPaths that stem from the initial state, we will append that child to the river (overall list)
@@ -94,6 +99,8 @@ def printStates(solution):
     traversal = []
     traversal.append(solution)
     crossing = solution.parent
+    print("CL ML BOAT CR MR")
+    print("----------------")
     # goes through each parent appending it to the path, so now the path will have all the valid traversals
     while crossing:
         traversal.append(crossing)
@@ -103,9 +110,9 @@ def printStates(solution):
         state = traversal[x - 1] # have to -1 so you start at the left side
         sideStr = ''
         if state.side == -1:
-            sideStr = '|    '
+            sideStr = '|----'
         else:
-            sideStr = '    |'
+            sideStr = '----|'
         print("{0}, {1} {2} {3},{4} ".format(state.cannibalLeft, state.missionaryLeft, sideStr, state.cannibalRight, state.missionaryRight))
 
 def main():
